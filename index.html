@@ -40,7 +40,6 @@
             color: white;
         }
 
-        /* REMOVE LOGO BACKGROUND */
         .logo img {
             height: 60px;
             background: transparent;
@@ -54,7 +53,6 @@
             100% { transform: scale(1); }
         }
 
-        /* ATTRACTIVE FONT */
         .logo span {
             font-family: 'Playfair Display', serif;
             font-size: 22px;
@@ -68,13 +66,11 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        /* Increase only VR Computer */
         .brand-main {
             font-size: 32px;
             font-weight: 700;
         }
 
-        /* Animated underline */
         .logo span::before {
             content: "";
             position: absolute;
@@ -93,19 +89,6 @@
             100% { width: 0%; }
         }
 
-        /* Shine effect stronger */
-        .logo span::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.9), transparent);
-            animation: shine 2.5s infinite;
-        }
-
-        /* Shine effect on text */
         .logo span::after {
             content: "";
             position: absolute;
@@ -123,16 +106,22 @@
             100% { left: 100%; }
         }
 
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
         nav a {
             color: white;
-            margin: 0 10px;
+            margin: 5px;
             text-decoration: none;
             padding: 5px 10px;
             border-radius: 15px;
             transition: 0.3s;
         }
 
-        /* ACTIVE TAB */
         nav a.active {
             background: rgba(255,255,255,0.3);
         }
@@ -141,12 +130,62 @@
             background: rgba(255,255,255,0.2);
         }
 
-        /* MOBILE */
-        @media (max-width: 600px) {
+        /* HAMBURGER */
+        .menu-toggle {
+            display: none;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* MOBILE MENU WITH ANIMATION */
+        @media (max-width: 768px) {
+
             header {
                 flex-direction: column;
                 text-align: center;
             }
+
+            .menu-toggle {
+                display: block;
+                color: white;
+                margin-top: 10px;
+            }
+
+            nav {
+                width: 100%;
+                flex-direction: column;
+                background: rgba(0,0,0,0.95);
+                border-radius: 10px;
+
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: all 0.4s ease;
+            }
+
+            nav a {
+                display: block;
+                margin: 12px;
+                text-align: center;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: 0.3s;
+            }
+
+            nav.active {
+                max-height: 500px;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            nav.active a {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .logo span { font-size: 18px; }
+            .brand-main { font-size: 24px; }
         }
 
         .container {
@@ -223,10 +262,6 @@
             margin-top: 40px;
         }
 
-        .footer-contact {
-            margin-top: 10px;
-        }
-
         .footer-contact a {
             display: inline-block;
             margin: 5px 10px;
@@ -235,31 +270,32 @@
             color: white;
             text-decoration: none;
             border-radius: 20px;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .footer-contact a:hover {
-            background: #16a085;
-            transform: scale(1.05);
         }
     </style>
 </head>
+
 <body>
 
 <header>
-    <!-- LOGO CLICK GO HOME -->
     <a href="index.html" class="logo">
-        <img src="logo.png" style="height:55px;">
+        <img src="logo.png">
         <span><strong class="brand-main">VR Computer</strong> Services</span>
     </a>
 
-    <nav>
+    <!-- HAMBURGER -->
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- NAV -->
+    <nav id="navbar">
         <a href="index.html" class="active">Home</a>
         <a href="computer.html">Computer</a>
         <a href="printer.html">Printer</a>
         <a href="networking.html">Networking</a>
         <a href="amc.html">AMC</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="preview.html">Preview</a>
     </nav>
 </header>
 
@@ -268,6 +304,7 @@
     <div class="hero">
         <h1>Professional Computer & Printer Services</h1>
         <p>Fast, Reliable & Affordable Solutions</p>
+
         <button onclick="window.location.href='tel:+917773926596'">
             <i class="fa-solid fa-phone"></i> Call Now
         </button>
@@ -279,25 +316,21 @@
         <a href="computer.html" class="card">
             <i class="fa-solid fa-desktop"></i>
             <h3>Computer Repair</h3>
-            <p>Laptop & desktop chip-level and hardware repair</p>
         </a>
 
         <a href="printer.html" class="card">
             <i class="fa-solid fa-print"></i>
             <h3>Printer Service</h3>
-            <p>All types of printer repair & cartridge services</p>
         </a>
 
         <a href="networking.html" class="card">
             <i class="fa-solid fa-network-wired"></i>
             <h3>Networking</h3>
-            <p>LAN setup, WiFi, router & office networking</p>
         </a>
 
         <a href="amc.html" class="card">
             <i class="fa-solid fa-user-gear"></i>
             <h3>AMC Support</h3>
-            <p>Annual Maintenance Contracts for businesses</p>
         </a>
     </div>
 
@@ -305,15 +338,28 @@
 
 <footer>
     <p>© 2026 VR Computer Services</p>
-    <p style="margin-top:10px; font-size:14px; opacity:0.8;">
-        Police Duplex No 6 & 7, Near Shiv Temple, Kranti Square, New Tapadiya Nagar, Akola - 444001
-    </p>
+    <p></p>Police Duplex No 6 & 7,</p>
+    </p>Near Shiv Temple, Kranti Square,</p>
+    </p>New Tapadiya Nagar, Akola - 444001</p>
+</footer>
+    <p>Akola, Maharashtra</p>
     <div class="footer-contact">
-        <a href="tel:+917773926596"><i class="fa-solid fa-phone"></i> Call</a>
-        <a href="https://wa.me/917773926596" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-        <a href="mailto:it.headoffice@vrcomputer.net"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="tel:+917773926596">Call</a>
+        <a href="https://wa.me/917773926596">WhatsApp</a>
     </div>
 </footer>
+
+<script>
+function toggleMenu() {
+    document.getElementById("navbar").classList.toggle("active");
+}
+
+document.querySelectorAll("#navbar a").forEach(link => {
+    link.addEventListener("click", () => {
+        document.getElementById("navbar").classList.remove("active");
+    });
+});
+</script>
 
 </body>
 </html>
