@@ -1,34 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Networking Services</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Networking Services | VR Computer Services</title>
 
-  <style>
-    body { font-family: Arial; text-align: center; background:#f5f7fb; margin:0; }
-    .container { padding:20px; }
-    img { width:100%; max-width:400px; border-radius:10px; }
-    .card { background:white; padding:20px; margin-top:20px; border-radius:10px; }
-    a { display:inline-block; margin-top:20px; padding:10px 20px; background:#1abc9c; color:white; text-decoration:none; border-radius:20px; }
-  </style>
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fb;
+    color: #333;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(135deg, #00c6ff, #00ff99);
+    color: white;
+    padding: 25px 15px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* CONTAINER */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* IMAGE */
+.image-box {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.image-box img {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 12px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 30px;
+    margin-top: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* SERVICES */
+.service {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    font-size: 18px;
+}
+
+.service i {
+    background: #e8fdf8;
+    color: #1abc9c;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.service:hover i {
+    background: #1abc9c;
+    color: white;
+}
+
+/* BUTTON */
+.back-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 28px;
+    background: linear-gradient(90deg, #1abc9c, #00c6ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* FOOTER */
+footer {
+    margin-top: 40px;
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+</style>
 </head>
 
 <body>
+
+<header>🌐 Networking Services</header>
+
 <div class="container">
 
-<h1>Networking Services</h1>
-
-<img src="https://cdn-icons-png.flaticon.com/512/2920/2920349.png">
+<div class="image-box">
+<img src="https://cdn-icons-png.flaticon.com/512/2920/2920349.png" alt="Networking">
+</div>
 
 <div class="card">
-<p>✔ LAN Setup</p>
-<p>✔ WiFi Installation</p>
-<p>✔ Router Configuration</p>
-<p>✔ Office Network Setup</p>
+    <div class="service"><i class="fas fa-network-wired"></i> LAN Setup</div>
+    <div class="service"><i class="fas fa-wifi"></i> WiFi Installation</div>
+    <div class="service"><i class="fas fa-router"></i> Router Configuration</div>
+    <div class="service"><i class="fas fa-building"></i> Office Network Setup</div>
 </div>
 
-<a href="index.html">⬅ Back</a>
+<center>
+<a href="index.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Back to Home
+</a>
+</center>
+
+<footer>
+© 2026 VR Computer Services | Professional IT Solutions
+</footer>
 
 </div>
+
 </body>
 </html>
