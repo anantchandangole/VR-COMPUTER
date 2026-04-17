@@ -3,94 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gallery | VR Computer Services</title>
+<title>Gallery - VR Computer</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-    margin: 0;
-    font-family: Inter, sans-serif;
-    background: #f5f7fb;
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
 }
 
 /* HEADER */
-header {
-    background: linear-gradient(90deg, hsl(192, 100%, 44%), hsl(110, 100%, 67%));
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: 600;
+header{
+    background:#111;
+    padding:15px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
 }
 
-/* GALLERY GRID */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-    gap: 20px;
-    padding: 25px;
+/* GRID GALLERY (Instagram Style) */
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+    padding:15px;
 }
 
-/* IMAGE STYLE */
-.gallery img {
-    width: 100%;
-    border-radius: 12px;
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    animation: fadeUp 0.6s ease forwards;
+.gallery img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-/* DELAY ANIMATION */
-.gallery img:nth-child(1) { animation-delay: 0.1s; }
-.gallery img:nth-child(2) { animation-delay: 0.2s; }
-.gallery img:nth-child(3) { animation-delay: 0.3s; }
-.gallery img:nth-child(4) { animation-delay: 0.4s; }
-.gallery img:nth-child(5) { animation-delay: 0.5s; }
-.gallery img:nth-child(6) { animation-delay: 0.6s; }
-.gallery img:nth-child(7) { animation-delay: 0.7s; }
-
-/* HOVER EFFECT */
-.gallery img:hover {
-    transform: scale(1.05);
-    transition: 0.3s;
+.gallery img:hover{
+    transform:scale(1.05);
 }
 
-/* ANIMATION KEYFRAME */
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+/* POPUP */
+.popup{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.95);
+    align-items:center;
+    justify-content:center;
+    z-index:999;
 }
 
-/* BACK BUTTON */
-.back {
-    display: block;
-    text-align: center;
-    margin: 20px;
-    text-decoration: none;
-    color: #00b894;
-    font-weight: 600;
+.popup img{
+    max-width:90%;
+    max-height:80%;
+    border-radius:10px;
+    animation:zoom 0.3s;
 }
+
+@keyframes zoom{
+    from{transform:scale(0.6);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+.close{
+    position:absolute;
+    top:20px;
+    right:25px;
+    font-size:35px;
+    cursor:pointer;
+    color:white;
+}
+
+.prev,.next{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:30px;
+    cursor:pointer;
+    padding:10px;
+    color:white;
+}
+
+.prev{left:20px;}
+.next{right:20px;}
+
 </style>
 </head>
 
 <body>
 
-<header>📸 Our Work Gallery</header>
+<header>
+    VR Computer Services Gallery
+</header>
 
+<!-- GALLERY GRID -->
 <div class="gallery">
-    <img src="1.jpg">
-    <img src="2.jpg">
-    <img src="3.jpg">
-    <img src="4.jpg">
-    <img src="5.jpg">
-    <img src="6.jpg">
-    <img src="7.jpg">
+    <img src="1.jpg" onclick="openImg(0)">
+    <img src="2.jpg" onclick="openImg(1)">
+    <img src="3.jpg" onclick="openImg(2)">
+    <img src="4.jpg" onclick="openImg(3)">
+    <img src="5.jpg" onclick="openImg(4)">
+    <img src="6.jpg" onclick="openImg(5)">
+    <img src="7.jpg" onclick="openImg(6)">
 </div>
 
-<a href="index.html" class="back">⬅ Back to Home</a>
+<!-- POPUP VIEWER -->
+<div class="popup" id="popup">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <img id="popupImg">
+    <div class="prev" onclick="change(-1)">&#10094;</div>
+    <div class="next" onclick="change(1)">&#10095;</div>
+</div>
+
+<script>
+let images=["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg"];
+let index=0;
+
+function openImg(i){
+    index=i;
+    document.getElementById("popup").style.display="flex";
+    document.getElementById("popupImg").src=images[index];
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display="none";
+}
+
+function change(step){
+    index+=step;
+    if(index>=images.length) index=0;
+    if(index<0) index=images.length-1;
+    document.getElementById("popupImg").src=images[index];
+}
+
+/* AUTO SLIDER */
+setInterval(()=>{
+    if(document.getElementById("popup").style.display==="flex"){
+        change(1);
+    }
+},3000);
+
+/* SWIPE MOBILE */
+let startX=0;
+
+document.getElementById("popup").addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX;
+});
+
+document.getElementById("popup").addEventListener("touchend",e=>{
+    let endX=e.changedTouches[0].clientX;
+    if(startX-endX>50) change(1);
+    if(endX-startX>50) change(-1);
+});
+</script>
 
 </body>
 </html>
