@@ -3,15 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gallery Debug - VR Computer</title>
+<title>Ultra Pro Gallery</title>
 
 <style>
 body{
     margin:0;
     font-family:Arial;
-    background:#0f172a;
+    background:#0b1220;
     color:white;
+}
+
+/* HEADER */
+header{
     text-align:center;
+    padding:15px;
+    font-size:20px;
+    font-weight:bold;
+    background:#111827;
 }
 
 /* GRID */
@@ -26,26 +34,14 @@ body{
     width:100%;
     height:150px;
     object-fit:cover;
-    border-radius:10px;
+    border-radius:12px;
     cursor:pointer;
     transition:0.3s;
-    background:#222;
+    loading:lazy;
 }
 
 .gallery img:hover{
     transform:scale(1.05);
-}
-
-/* LOADING TEXT */
-.loading{
-    position:fixed;
-    top:10px;
-    left:10px;
-    background:#1abc9c;
-    padding:6px 10px;
-    border-radius:6px;
-    font-size:14px;
-    display:none;
 }
 
 /* POPUP */
@@ -56,67 +52,68 @@ body{
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.95);
+    background:rgba(0,0,0,0.97);
     align-items:center;
     justify-content:center;
     z-index:999;
 }
 
 .popup img{
-    max-width:90%;
+    max-width:92%;
     max-height:80%;
-    border-radius:10px;
+    border-radius:12px;
+    animation:zoom 0.25s ease;
 }
 
-.close{
+@keyframes zoom{
+    from{transform:scale(0.6);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+/* BUTTONS */
+.close,.prev,.next,.download{
     position:absolute;
-    top:20px;
-    right:20px;
-    font-size:35px;
+    color:white;
+    font-size:28px;
     cursor:pointer;
+    user-select:none;
 }
 
-.prev,.next{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:30px;
-    cursor:pointer;
-    padding:10px;
-}
+.close{top:15px;right:20px;font-size:35px;}
+.prev{left:15px;top:50%;}
+.next{right:15px;top:50%;}
+.download{bottom:20px;right:20px;font-size:20px;background:#1abc9c;padding:8px 12px;border-radius:8px;}
 
-.prev{left:10px;}
-.next{right:10px;}
 </style>
 </head>
 
 <body>
 
-<h2>Gallery Debug Mode</h2>
+<header>VR Computer Ultra Gallery</header>
 
+<!-- GALLERY -->
 <div class="gallery">
-    <img id="img0" onclick="openImg(0)">
-    <img id="img1" onclick="openImg(1)">
-    <img id="img2" onclick="openImg(2)">
-    <img id="img3" onclick="openImg(3)">
-    <img id="img4" onclick="openImg(4)">
-    <img id="img5" onclick="openImg(5)">
-    <img id="img6" onclick="openImg(6)">
-</div>
+    <img src="https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/1.jpg" onclick="openImg(0)">
+    <img src="https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/2.jpg" onclick="openImg(1)">
+    <img src="https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/3.jpg" onclick="openImg(2)">
+    <img src="https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/4.jpg" onclick="openImg(3)">
+    <img src="https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/5.jpg" onclick="openImg(4)">
+    <img src="https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/6.jpg" onclick="openImg(5)">
+    <img src="https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/7.jpg" onclick="openImg(6)">
 </div>
 
 <!-- POPUP -->
 <div class="popup" id="popup">
-    <span class="close" onclick="closePopup()">&times;</span>
+    <span class="close" onclick="closePopup()">×</span>
+    <span class="prev" onclick="change(-1)">❮</span>
     <img id="popupImg">
-    <div class="prev" onclick="change(-1)">&#10094;</div>
-    <div class="next" onclick="change(1)">&#10095;</div>
+    <span class="next" onclick="change(1)">❯</span>
+    <div class="download" onclick="downloadImg()">⬇ Download</div>
 </div>
 
 <script>
 
-/* ✅ RAW GITHUB IMAGE LINKS (FIX FOR MOBILE) */
-let images = [
+let images=[
 "https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/1.jpg",
 "https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/2.jpg",
 "https://raw.githubusercontent.com/anantchandangole/VR-COMPUTER/main/3.jpg",
@@ -127,21 +124,9 @@ let images = [
 ];
 
 let current=0;
+let zoom=false;
 
-/* LOAD IMAGES WITH DEBUG */
-function loadImages(){
-    for(let i=0;i<images.length;i++){
-        let img=document.getElementById("img"+i);
-        img.src=images[i];
-
-        img.onerror=function(){
-            img.style.border="2px solid red";
-            img.alt="FAILED TO LOAD";
-        }
-    }
-}
-
-/* OPEN POPUP */
+/* OPEN */
 function openImg(i){
     current=i;
     document.getElementById("popup").style.display="flex";
@@ -153,7 +138,7 @@ function closePopup(){
     document.getElementById("popup").style.display="none";
 }
 
-/* NEXT/PREV */
+/* CHANGE */
 function change(step){
     current+=step;
     if(current>=images.length) current=0;
@@ -161,16 +146,40 @@ function change(step){
     document.getElementById("popupImg").src=images[current];
 }
 
-/* AUTO SLIDER */
+/* AUTO SLIDER WHEN OPEN */
 setInterval(()=>{
     if(document.getElementById("popup").style.display==="flex"){
         change(1);
     }
 },3000);
 
-/* INIT */
-loadImages();
+/* DOWNLOAD IMAGE */
+function downloadImg(){
+    let a=document.createElement("a");
+    a.href=images[current];
+    a.download="vr-computer.jpg";
+    a.click();
+}
 
+/* SWIPE SUPPORT */
+let startX=0;
+
+document.getElementById("popup").addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX;
+});
+
+document.getElementById("popup").addEventListener("touchend",e=>{
+    let endX=e.changedTouches[0].clientX;
+    if(startX-endX>50) change(1);
+    if(endX-startX>50) change(-1);
+});
+
+/* DOUBLE TAP ZOOM */
+document.getElementById("popupImg").addEventListener("click",()=>{
+    zoom=!zoom;
+    document.getElementById("popupImg").style.transform=
+        zoom ? "scale(1.5)" : "scale(1)";
+});
 </script>
 
 </body>
