@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery | VR Computer Services</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+    background: #f5f7fb;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(90deg, hsl(192, 100%, 44%), hsl(110, 100%, 67%));
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* GALLERY GRID */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    gap: 20px;
+    padding: 25px;
+}
+
+/* IMAGE STYLE */
+.gallery img {
+    width: 100%;
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    animation: fadeUp 0.6s ease forwards;
+}
+
+/* DELAY ANIMATION */
+.gallery img:nth-child(1) { animation-delay: 0.1s; }
+.gallery img:nth-child(2) { animation-delay: 0.2s; }
+.gallery img:nth-child(3) { animation-delay: 0.3s; }
+.gallery img:nth-child(4) { animation-delay: 0.4s; }
+.gallery img:nth-child(5) { animation-delay: 0.5s; }
+.gallery img:nth-child(6) { animation-delay: 0.6s; }
+.gallery img:nth-child(7) { animation-delay: 0.7s; }
+
+/* HOVER EFFECT */
+.gallery img:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+/* ANIMATION KEYFRAME */
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* BACK BUTTON */
+.back {
+    display: block;
+    text-align: center;
+    margin: 20px;
+    text-decoration: none;
+    color: #00b894;
+    font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+
+<header>📸 Our Work Gallery</header>
+
+<div class="gallery">
+    <img src="1.jpg">
+    <img src="2.jpg">
+    <img src="3.jpg">
+    <img src="4.jpg">
+    <img src="5.jpg">
+    <img src="6.jpg">
+    <img src="7.jpg">
+</div>
+
+<a href="index.html" class="back">⬅ Back to Home</a>
+
+</body>
+</html>
