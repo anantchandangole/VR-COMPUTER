@@ -61,6 +61,12 @@ header{
     max-width:92%;
     max-height:80%;
     border-radius:12px;
+    animation:zoom 0.3s ease;
+}
+
+@keyframes zoom{
+    from{transform:scale(0.8);}
+    to{transform:scale(1);}
 }
 
 .close,.prev,.next{
@@ -103,17 +109,24 @@ let images = [
 
 let current = 0;
 
-/* LOAD GALLERY PROPERLY */
+/* LOAD GALLERY */
 function loadGallery(){
     let gallery = document.getElementById("gallery");
+    gallery.innerHTML = ""; // clear old
 
     images.forEach((src, i)=>{
         let img = document.createElement("img");
-        img.src = src;
+
+        // FORCE REFRESH (important for mobile)
+        img.src = src + "?v=" + new Date().getTime();
 
         img.onerror = () => {
             img.style.border = "2px solid red";
-            img.alt = "Image failed";
+            console.log("❌ Failed:", src);
+        };
+
+        img.onload = () => {
+            console.log("✅ Loaded:", src);
         };
 
         img.onclick = () => openImg(i);
